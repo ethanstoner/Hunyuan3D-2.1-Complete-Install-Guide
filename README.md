@@ -283,6 +283,39 @@ git checkout 37a0973
 
 ---
 
+### Error: ModuleNotFoundError: No module named `cv2.ximgproc`
+
+**Cause:** OpenCV is installed without the "contrib" modules. The `ximgproc` module is part of OpenCV's extended functionality and requires `opencv-contrib-python` instead of the standard `opencv-python`.
+
+**Solution:**
+
+Navigate to the ComfyUI portable root folder (the folder containing `python_embeded\`, `ComfyUI\`, and `run_nvidia_gpu.bat`).
+
+**Remove regular OpenCV (if installed):**
+
+```bash
+python_embeded\python.exe -m pip uninstall -y opencv-python
+```
+
+**Install OpenCV contrib build (includes ximgproc):**
+
+```bash
+python_embeded\python.exe -m pip install --upgrade opencv-contrib-python
+```
+
+**Restart ComfyUI** after installation.
+
+If it still fails, do a clean reinstall:
+
+```bash
+python_embeded\python.exe -m pip uninstall -y opencv-python opencv-contrib-python
+python_embeded\python.exe -m pip install --no-cache-dir --force-reinstall opencv-contrib-python
+```
+
+> **Important**: Always use ComfyUI's embedded Python (`python_embeded\python.exe`). Running pip on system Python will not affect ComfyUI Portable.
+
+---
+
 ## Quick Reference
 
 ### Example Workflow Location
