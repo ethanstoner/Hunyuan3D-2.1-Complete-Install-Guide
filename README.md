@@ -32,6 +32,10 @@
 
 This guide provides a complete installation walkthrough for **Hunyuan3D-2.1** using **ComfyUI Portable v0.3.45** on Windows with NVIDIA RTX GPUs.
 
+> ⚠️ **GPU Requirement**:  
+> **Hunyuan3D-2.1 requires an NVIDIA RTX 30-series or newer GPU.**  
+> RTX 20-series GPUs (including RTX 2060) are **not supported** by the provided CUDA extensions.
+
 > **Important**: This guide is specifically validated for:
 > - **Windows** operating system
 > - **NVIDIA RTX GPU** (CUDA support required)
@@ -42,6 +46,47 @@ This guide provides a complete installation walkthrough for **Hunyuan3D-2.1** us
 ## 1. Prerequisites
 
 Before starting, ensure you have the following installed:
+
+### 1.0 Minimum GPU Requirements (IMPORTANT)
+
+**Required:**
+- **NVIDIA GPU with CUDA support**
+- **Compute Capability ≥ 8.0** (Ampere or newer architecture)
+
+**Examples that work:**
+- RTX 3060 / 3070 / 3080 / 3090
+- RTX 4060 / 4070 / 4080 / 4090
+- RTX A-series (A2000, A4000, A5000, etc.)
+
+**Minimum VRAM:**
+- **8 GB VRAM minimum**
+- **12–24 GB VRAM strongly recommended** for stable generation and higher resolution meshes
+
+**GPUs That Are NOT SUPPORTED (Known Issue):**
+- RTX 2060 / 2070 / 2080 (Turing, SM 7.5)
+- GTX 10-series
+- GTX 16-series
+- Any GPU older than RTX 30-series
+
+> **Warning**: These GPUs may launch ComfyUI successfully but will fail during generation with errors such as:
+> ```
+> CUDA error: no kernel image is available for execution on the device
+> ```
+> 
+> This happens because the Hunyuan3D custom rasterizer CUDA extension is compiled without support for SM 7.5 (Turing) and older architectures.
+
+**Why This Requirement Exists:**
+
+Hunyuan3D-2.1 relies on a precompiled CUDA rasterizer kernel (`custom_rasterizer_kernel`) for performance. The distributed Windows wheels are typically built for newer GPU architectures only (Ampere+).
+
+If your GPU is older:
+- Python and ComfyUI will still start
+- Model loading may succeed
+- Generation will fail as soon as the rasterizer kernel is invoked
+
+> **Note for Advanced Users**: Users with unsupported GPUs may attempt to rebuild the rasterizer from source with `TORCH_CUDA_ARCH_LIST=7.5` or downgrade to a workflow that does not invoke the rasterizer. These approaches are not officially supported and are outside the scope of standard installation.
+
+---
 
 ### 1.1 ComfyUI Portable (REQUIRED)
 
