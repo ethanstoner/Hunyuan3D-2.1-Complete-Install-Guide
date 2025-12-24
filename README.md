@@ -52,6 +52,14 @@ Before starting, ensure you have the following installed:
 **Required:**
 - **NVIDIA GPU with CUDA support**
 - **Compute Capability ≥ 8.0** (Ampere or newer architecture)
+- **8 GB VRAM minimum** (12–24 GB strongly recommended)
+
+**Supported GPUs:** RTX 30-series, RTX 40-series, RTX A-series (A2000, A4000, A5000, etc.)
+
+**Not Supported:** RTX 20-series, GTX 10-series, GTX 16-series, or any GPU older than RTX 30-series
+
+<details>
+<summary><strong>Click to expand detailed GPU requirements and explanations</strong></summary>
 
 **Examples that work:**
 - RTX 3060 / 3070 / 3080 / 3090
@@ -85,6 +93,8 @@ If your GPU is older:
 - Generation will fail as soon as the rasterizer kernel is invoked
 
 > **Note for Advanced Users**: Users with unsupported GPUs may attempt to rebuild the rasterizer from source with `TORCH_CUDA_ARCH_LIST=7.5` or downgrade to a workflow that does not invoke the rasterizer. These approaches are not officially supported and are outside the scope of standard installation.
+
+</details>
 
 ---
 
