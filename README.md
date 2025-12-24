@@ -54,45 +54,51 @@ Before starting, ensure you have the following installed:
 - **Compute Capability ≥ 8.0** (Ampere or newer architecture)
 - **8 GB VRAM minimum** (12–24 GB strongly recommended)
 
-**Supported GPUs:** RTX 30-series, RTX 40-series, RTX A-series (A2000, A4000, A5000, etc.)
-
-**Not Supported:** RTX 20-series, GTX 10-series, GTX 16-series, or any GPU older than RTX 30-series
-
-<details>
-<summary><strong>Click to expand detailed GPU requirements and explanations</strong></summary>
-
-**Examples that work:**
-- RTX 3060 / 3070 / 3080 / 3090
-- RTX 4060 / 4070 / 4080 / 4090
+**✅ Supported GPUs:**
+- RTX 30-series (3060, 3070, 3080, 3090)
+- RTX 40-series (4060, 4070, 4080, 4090)
 - RTX A-series (A2000, A4000, A5000, etc.)
 
-**Minimum VRAM:**
-- **8 GB VRAM minimum**
-- **12–24 GB VRAM strongly recommended** for stable generation and higher resolution meshes
-
-**GPUs That Are NOT SUPPORTED (Known Issue):**
-- RTX 2060 / 2070 / 2080 (Turing, SM 7.5)
+**❌ Not Supported:**
+- RTX 20-series (2060, 2070, 2080)
 - GTX 10-series
 - GTX 16-series
 - Any GPU older than RTX 30-series
 
-> **Warning**: These GPUs may launch ComfyUI successfully but will fail during generation with errors such as:
+<details>
+<summary><strong>📋 Detailed GPU Requirements & Technical Information</strong></summary>
+
+#### VRAM Recommendations
+
+- **8 GB VRAM** — Minimum requirement
+- **12–24 GB VRAM** — Strongly recommended for stable generation and higher resolution meshes
+
+#### Unsupported GPU Behavior
+
+> **⚠️ Warning**: Unsupported GPUs may launch ComfyUI successfully but will fail during generation with errors such as:
+> 
 > ```
 > CUDA error: no kernel image is available for execution on the device
 > ```
 > 
-> This happens because the Hunyuan3D custom rasterizer CUDA extension is compiled without support for SM 7.5 (Turing) and older architectures.
+> This occurs because the Hunyuan3D custom rasterizer CUDA extension is compiled without support for SM 7.5 (Turing) and older architectures.
 
-**Why This Requirement Exists:**
+#### Why This Requirement Exists
 
 Hunyuan3D-2.1 relies on a precompiled CUDA rasterizer kernel (`custom_rasterizer_kernel`) for performance. The distributed Windows wheels are typically built for newer GPU architectures only (Ampere+).
 
-If your GPU is older:
-- Python and ComfyUI will still start
-- Model loading may succeed
-- Generation will fail as soon as the rasterizer kernel is invoked
+**What happens with unsupported GPUs:**
+- ✅ Python and ComfyUI will start normally
+- ✅ Model loading may succeed
+- ❌ Generation will fail as soon as the rasterizer kernel is invoked
 
-> **Note for Advanced Users**: Users with unsupported GPUs may attempt to rebuild the rasterizer from source with `TORCH_CUDA_ARCH_LIST=7.5` or downgrade to a workflow that does not invoke the rasterizer. These approaches are not officially supported and are outside the scope of standard installation.
+#### Advanced Options (Not Officially Supported)
+
+Users with unsupported GPUs may attempt to:
+- Rebuild the rasterizer from source with `TORCH_CUDA_ARCH_LIST=7.5`
+- Use a workflow that does not invoke the rasterizer
+
+> **Note**: These approaches are not officially supported and are outside the scope of standard installation.
 
 </details>
 
